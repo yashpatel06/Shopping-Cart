@@ -1,4 +1,5 @@
-import { Fragment, useEffect, useState } from "react";
+import React from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import Logo from "../assets/smartphone.png";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import {
@@ -7,12 +8,16 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { CartContext } from "../context/cartContext";
 
 const Navbar = () => {
+  const { fetchCart, deleteCart, cart } = useContext(CartContext);
+  // console.log(x);
   const [open, setOpen] = useState(false);
-  const [carts, setCarts] = useState([]);
-  const nav = useNavigate();
+  // const [carts, setCarts] = useState();
+  // const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const openCart = () => {
     setOpen(true);
@@ -24,9 +29,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products?limit=5")
-      .then((res) => res.json())
-      .then((carts) => setCarts(carts));
+    fetchCart();
   }, []);
 
   return (
@@ -147,13 +150,8 @@ const Navbar = () => {
                         <div className="mt-8">
                           <div className="flow-root">
                             <div className="">
-                              {carts.map((x) => (
+                              {cart.map((x) => (
                                 <div
-                                  onClick={() => {
-                                    nav(`/SingleProduct/${x.title}`, {
-                                      state: { x },
-                                    });
-                                  }}
                                   className=" w-full px-5 mx-auto  shadow-2xl rounded-lg hover:scale-105 hover:duration-500 "
                                   key={x}
                                 >
@@ -172,13 +170,25 @@ const Navbar = () => {
                                     <p className="text-lg  gap-5 flex justify-center text-center font-bold py-5">
                                       <h1>Price </h1>${x.price}
                                     </p>
-                                    <button className="bg-orange-600  w-full hover:bg-orange-500  text-white p-3 text-lg font-bold rounded-lg ">
+                                    <p className="text-lg  gap-5 flex justify-center text-center font-bold py-5">
+                                      <h1>Quantity </h1>
+                                      {x.quantity}
+                                    </p>
+                                    <button
+                                      onClick={() => {
+                                        deleteCart(x.id);
+                                      }}
+                                      className="bg-orange-600  w-full hover:bg-orange-500  text-white p-3 text-lg font-bold rounded-lg "
+                                    >
                                       Remove
                                     </button>
                                   </div>
                                 </div>
                               ))}
                             </div>
+                            <Link onClick={() => setOpen(false)} className="">
+                              hello
+                            </Link>
                           </div>
                         </div>
                       </div>

@@ -13,6 +13,7 @@ import SingleProduct from "./component/SingleProduct";
 import FromCategorie from "./component/FromCategorie";
 import MainLayout from "./layout/mainlayout";
 import AuthLayout from "./layout/authlayout";
+import { CartProvider } from "./context/cartContext";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
   </React.StrictMode>
 );

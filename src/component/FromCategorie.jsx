@@ -19,7 +19,7 @@ const FromCategorie = () => {
         <div
           className=" grid grid-rows-1 shadow-2xl rounded-lg hover:scale-105 hover:duration-500 "
           onClick={() => {
-            navigate(`/SingleProduct/:${x.title}`, {
+            navigate(`/SingleProduct/${x.id}`, {
               state: { x },
             });
           }}

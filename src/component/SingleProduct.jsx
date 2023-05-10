@@ -1,9 +1,12 @@
 import React from "react";
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
+import { CartContext } from "../context/cartContext";
 
 const SingleProduct = () => {
+  // const [item, setItem] = useState(1);
   const { state } = useLocation();
-  console.log(state);
+  const { addToCart } = useContext(CartContext);
   const { x } = state;
 
   console.log(x);
@@ -25,7 +28,12 @@ const SingleProduct = () => {
             <span>Price</span>${x.price}
           </p>
 
-          <button className="bg-orange-600 w-full hover:bg-orange-500  text-white p-3 text-lg font-bold rounded-lg ">
+          <button
+            onClick={() => {
+              addToCart(x);
+            }}
+            className="bg-orange-600 w-full hover:bg-orange-500  text-white p-3 text-lg font-bold rounded-lg "
+          >
             Add to cart
           </button>
         </div>
